@@ -29,7 +29,7 @@ def tag_question():
     # TODO run the question text through the classifier
     # TODO return the predicted tags
     tags = ['tag1', 'tag2', question]
-    return render_template('predict.html')#jsonify(tags=tags) 
+    return render_template('predict.html', question=question, tags=tags)
             
 if __name__ == '__main__':
     # Production mode

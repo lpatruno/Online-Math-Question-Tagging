@@ -15,15 +15,12 @@ function tag_question(){
 		url: '/tagQuestion',
 		data: {'question': question},
 		success: function(data){
-			/*
-			var tags = data['tags'];
-			for(var i = 0; i < tags.length; i++){
-				console.log(tags[i]);
-  			}
-			*/
+			// Substitute the html into the page
 			$('#container').html(data);
+			// Render the LaTeX
+			MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
 		},
-		dataType: 'html'//'json'
+		dataType: 'html'
 	});
 	
 }
