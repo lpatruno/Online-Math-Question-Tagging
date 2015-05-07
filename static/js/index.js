@@ -3,13 +3,42 @@
 */
 
 /**
+Save the question text and the predicted keyword.
+*/
+function save(){
+	var question = $.trim( $('#renderedQuestionText').text() );
+	var tags = [];
+	tags[0] = 'a';
+	tags[1] = 'b';
+	
+	$.ajax({
+		type: 'POST',
+		url: '/saveTags',
+		data: {'question': question, 'tags': tags},
+		success: function(data){
+			// TODO Flash message
+			
+			// Inject html into the page
+			$('#container').html(data);
+		
+			// Reinitialize the original click handlers
+			initialize();
+		},
+		dataType: 'html'
+	});
+}
+
+/**
 Reject the predicted tags and go back to the question input screen
 AJAX request for the question input UI.
 */
 function cancel(){
 	
 	$.get('/cancel', function(data){
+		// Inject html into the page
 		$('#container').html(data);
+		
+		// Reinitialize the original click handlers
 		initialize();
 	});	
 }
@@ -27,13 +56,16 @@ function tag_question(){
 		url: '/tagQuestion',
 		data: {'question': question},
 		success: function(data){
+			
 			// Substitute the html into the page
 			$('#container').html(data);
+			
 			// Render the LaTeX
 			MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
 			
+			// Add click handlers to the new buttons
 			$( '#mSave').click(function(){
-				// TODO define click handler for the save button
+				save();
 			});
 			
 			$( '#mCancel').click(function(){

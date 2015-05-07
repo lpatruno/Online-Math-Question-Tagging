@@ -1,10 +1,11 @@
 <div class="row">
-	<!-- TODO change the id of this div -->
-	<div id='questionPreviewText' class='col-sm-9 col-sm-offset-1'>
+	<div class='col-sm-9 col-sm-offset-1'>
 		<div class='thumbnail'>
-			{% if question %}
-			{{ question }}
-			{% endif %}
+			<div id='renderedQuestionText'>
+				{% if question %}
+				{{ question }}
+				{% endif %}
+			</div>
 			<div class="caption">
 				{% for tag in tags %}
 				    <code>{{ tag }}</code>
@@ -22,4 +23,4 @@
 			<button id='mCancel' type='button' class="btn btn-danger">Cancel</button>
 		</div>
 	</div>
-</div><!-- .row -->
+</div>

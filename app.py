@@ -18,7 +18,10 @@ def index():
     Method to display the MathTag index page
     """
     return render_template('index.html')
- 
+    
+
+# TODO run the question text through the classifier
+# TODO return the predicted tags
 @app.route('/tagQuestion', methods=['POST'])   
 def tag_question():
     """
@@ -26,17 +29,30 @@ def tag_question():
     """ 
     # Retrieve the question text from from request object
     question = request.form['question']
-    # TODO run the question text through the classifier
-    # TODO return the predicted tags
-    tags = ['tag1', 'tag2', question]
+    
+    tags = ['tag1', 'tag2']
     return render_template('predict.html', question=question, tags=tags)
+    
 
+# TODO Save the data
+@app.route('/saveTags', methods=['POST'])
+def save_tags():
+    """
+    Save the question text and the predicted tags
+    """
+    question = request.form['question']
+    tags = request.form.getlist('tags[]')
+    
+    return render_template('input.html')
+    
+    
 @app.route('/cancel')    
 def cancel():
     """
     Reject the predicted tags and return the question input UI
     """
     return render_template('input.html')
+    
     
 if __name__ == '__main__':
     # Production mode
