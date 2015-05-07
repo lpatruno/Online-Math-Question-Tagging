@@ -30,7 +30,14 @@ def tag_question():
     # TODO return the predicted tags
     tags = ['tag1', 'tag2', question]
     return render_template('predict.html', question=question, tags=tags)
-            
+
+@app.route('/cancel')    
+def cancel():
+    """
+    Reject the predicted tags and return the question input UI
+    """
+    return render_template('input.html')
+    
 if __name__ == '__main__':
     # Production mode
     #port = int(os.environ.get("PORT", 5000))
