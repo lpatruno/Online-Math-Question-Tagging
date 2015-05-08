@@ -51,11 +51,28 @@ function tag_question(){
 	
 	var question = document.getElementById("questionText").value;
 	
+	// Credit to Jacques Dancause for the spinner code
+	// http://codepen.io/hexagonest/
+	var spinner = '<div style="margin-top:20%;" class="content">' + 
+	  '<p id="spinnerText">Generating predictions...</p>' +
+	  '<div class="loading">' +
+	  '<div class="l1"></div>' +
+	  '<div class="l2"></div>' +
+	  '<div class="l3"></div>' +
+	  '</div>' +
+	  '</div>' +
+	  '<link href="http://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet" type="text/css"/>';
+	  
+	$('#header').hide();
+	$('#container').html( spinner );
+	
 	$.ajax({
 		type: 'POST',
 		url: '/tagQuestion',
 		data: {'question': question},
 		success: function(data){
+			
+			$('#header').slideDown( "slow" );
 			
 			// Substitute the html into the page
 			$('#container').html(data);
