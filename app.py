@@ -7,6 +7,7 @@
 ###########################################################################################################################
 
 from flask import Flask, request, render_template, jsonify
+import ast
 import numpy as np
 import pandas as pd
 from sklearn.externals import joblib
@@ -196,14 +197,26 @@ def tag_question():
     return render_template('predict.html', question=question, tags=tags)
     
 
-# TODO Save the data
 @app.route('/saveTags', methods=['POST'])
 def save_tags():
     """
     Save the question text and the predicted tags
     """
+    # Get new question and tags from request 
     question = request.form['question']
     tags = request.form.getlist('tags[]')
+    
+    # Load DataFrame containing previous questions
+    questions = pd.read_csv('data/questions.csv', index_col=0)
+    
+    # Append new question and tags
+    cols = questions.columns.tolist()
+    vals = questions.values.tolist()
+    vals.append([question, tags])
+    questions = pd.DataFrame(vals, columns=cols)
+    
+    # Save data
+    questions.to_csv('data/questions.csv')
     
     return render_template('input.html')
     

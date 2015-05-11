@@ -5,11 +5,7 @@
 /**
 Save the question text and the predicted keyword.
 */
-function save(){
-	var question = $.trim( $('#renderedQuestionText').text() );
-	var tags = [];
-	tags[0] = 'a';
-	tags[1] = 'b';
+function save(question, tags){
 	
 	$.ajax({
 		type: 'POST',
@@ -82,7 +78,18 @@ function tag_question(){
 			
 			// Add click handlers to the new buttons
 			$( '#mSave').click(function(){
-				save();
+				
+				// Retrieve the question text and predicted tags 
+				var question = $.trim( $('#renderedQuestionText').text() );
+				
+				var tags = [];
+				var tag_divs = $('#tagContainer').children($( ":contains('tag_')" ));
+				
+				for (var i=0; i<tag_divs.length; i++){
+					tags.push( tag_divs[i].id );
+				}
+				
+				save(question, tags);
 			});
 			
 			$( '#mCancel').click(function(){

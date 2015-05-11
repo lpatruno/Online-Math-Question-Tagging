@@ -6,9 +6,9 @@
 				{{ question }}
 				{% endif %}
 			</div>
-			<div class="caption">
+			<div id="tagContainer" class="caption">
 				{% for tag in tags %}
-				    <code>{{ tag }}</code>
+				    <code id="{{tag}}">{{ tag }}</code>
 				{% endfor %}
 			</div>
 		</div>
