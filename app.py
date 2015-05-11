@@ -239,7 +239,36 @@ def view():
     """
     Return the html for the view questions page
     """
-    return render_template('view.html')
+    questions = pd.read_csv('data/questions.csv', index_col=0)
+    tag_sets = questions.tags.tolist()
+    tags = []
+    
+    for tag_set in tag_sets:
+        tags = list(set(tags + ast.literal_eval(tag_set)))
+    
+    app.logger.debug(tags)
+        
+    return render_template('view.html', tags=tags)
+    
+@app.route('/viewQuestions', methods=['POST'])
+def view_questions():
+    """
+    Return all questions marked with a particular tag
+    """
+    # Get the tag from the request object
+    tag = request.form['tag']
+    
+    select_questions = []
+    
+    questions = pd.read_csv('data/questions.csv', index_col=0)
+    
+    for i in range(questions.shape[0]):
+        row = questions.iloc[i]
+        tag_set = ast.literal_eval( row.tags )
+        if tag in tag_set:
+            select_questions.append({'question': row.question, 'tags': tag_set})
+    
+    return jsonify(questions=select_questions)
     
     
 if __name__ == '__main__':

@@ -2,7 +2,28 @@
 <div id='header' class="blog-header">
 	<h1 class="blog-title">View Questions</h1>
     <p class="lead blog-description">
-		View all of the predictions
+		View all questions with a particular tag
 	</p>
 </div>
+
+<div class='row'>
+	<div class='col-sm-8 col-sm-offset-1'>
+		<select id='tagSelect' class="form-control">
+			<option selected="selected">Select Tag</option>
+			{% for tag in tags %}
+			<option>{{tag}}</option>
+			{% endfor %}
+		</select>
+	</div>
 	
+	<div class='col-sm-2'>
+		<button id='mViewTags' type="button" class="btn btn-primary" aria-label="Left Align">
+			View
+		</button>
+	</div>
+</div>
+
+<div style='margin-top:15px;' class='row'>
+	<div id='viewQuestionContainer' class='col-sm-8 col-sm-offset-1'>	
+	</div>
+</div>

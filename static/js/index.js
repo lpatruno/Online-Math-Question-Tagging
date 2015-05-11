@@ -31,7 +31,7 @@ function cancel(){
 	
 	$.get('/cancel', function(data){
 		// Inject html into the page
-		$('#container').html(data);
+		$('#mainContainer').html(data);
 		
 		// Reinitialize the original click handlers
 		initialize();
@@ -101,6 +101,49 @@ function tag_question(){
 }
 
 /**
+Initialize the click handlers associated with the view questions page.
+*/
+function initializeView(){
+	
+	$('#mViewTags').click(function(){
+		var tag = $("#tagSelect :selected").text();
+		
+		if (tag != "Select Tag"){
+				
+			$.ajax({
+				type: 'POST',
+				url: '/viewQuestions',
+				data: {'tag': tag},
+				success: function(data){
+					var questions = data['questions'];
+					var question_string = '';
+					
+					for (var i=0; i<questions.length; i++){
+						var question = questions[i]['question'];
+						var tags = questions[i]['tags'];
+						
+						var tag_string = '';
+						for (var j=0; j<tags.length; j++){
+							tag_string += "<code style='margin-right:15px;'>" + tags[j] + "</code>";
+						}
+						
+						question_string += "<div class='thumbnail'>" + 
+												"<div>" + question + "</div>" + 
+												"<div class='caption'>" + tag_string + "</div>" + 
+											"</div>";	
+					}
+					$('#viewQuestionContainer').html(question_string);
+					
+					// Render the LaTeX
+					MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+				},
+				dataType: 'json'
+			});	
+		} 
+	});
+}
+
+/**
 Initialize the click handlers for the question text input.
 This is called when the page first loads, and if a user clicks cancel after submitting a question.
 */
@@ -133,8 +176,8 @@ function initialize(){
 				// Inject html into the page
 				$('#mainContainer').html(data);
 		
-				// Reinitialize the original click handlers
-				//initialize();
+				// Initialize the view questions page click handlers
+				initializeView();
 			});	
 		}
 	});
