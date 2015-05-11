@@ -100,6 +100,24 @@ This is called when the page first loads, and if a user clicks cancel after subm
 */
 function initialize(){
 	
+	// Click handler to view the tag question page
+	$('#mTagPage').click(function(){
+		if ($('#mViewPage').hasClass('active')){
+			console.log('switch to tag page');
+			$('#mViewPage').removeClass('active');
+			$('#mTagPage').addClass('active');
+		}
+	});
+	
+	// Click handler to view the view question pages
+	$('#mViewPage').click(function(){
+		if ($('#mTagPage').hasClass('active')){
+			console.log('switch to view page');
+			$('#mTagPage').removeClass('active');
+			$('#mViewPage').addClass('active');
+		}
+	});
+	
 	// Click handler to submit the question text to the tagging engine
 	$( "#mSubmit" ).click(function () {
 		tag_question();
