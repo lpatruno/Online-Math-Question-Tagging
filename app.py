@@ -178,8 +178,6 @@ def index():
     return render_template('index.html')
     
 
-# TODO run the question text through the classifier
-# TODO return the predicted tags
 @app.route('/tagQuestion', methods=['POST'])   
 def tag_question():
     """
@@ -227,6 +225,21 @@ def cancel():
     Reject the predicted tags and return the question input UI
     """
     return render_template('input.html')
+
+@app.route('/tagPage')
+def tag():
+    """
+    Return html for the tag input page
+    """
+    return render_template('input.html')
+    
+    
+@app.route('/viewPage')
+def view():
+    """
+    Return the html for the view questions page
+    """
+    return render_template('view.html')
     
     
 if __name__ == '__main__':

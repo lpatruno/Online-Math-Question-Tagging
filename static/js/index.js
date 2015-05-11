@@ -12,10 +12,9 @@ function save(question, tags){
 		url: '/saveTags',
 		data: {'question': question, 'tags': tags},
 		success: function(data){
-			// TODO Flash message
 			
 			// Inject html into the page
-			$('#container').html(data);
+			$('#mainContainer').html(data);
 		
 			// Reinitialize the original click handlers
 			initialize();
@@ -110,18 +109,33 @@ function initialize(){
 	// Click handler to view the tag question page
 	$('#mTagPage').click(function(){
 		if ($('#mViewPage').hasClass('active')){
-			console.log('switch to tag page');
 			$('#mViewPage').removeClass('active');
 			$('#mTagPage').addClass('active');
+			
+			$.get('/tagPage', function(data){
+				// Inject html into the page
+				$('#mainContainer').html(data);
+		
+				// Reinitialize the original click handlers
+				initialize();
+			});	
 		}
 	});
 	
 	// Click handler to view the view question pages
 	$('#mViewPage').click(function(){
 		if ($('#mTagPage').hasClass('active')){
-			console.log('switch to view page');
+			
 			$('#mTagPage').removeClass('active');
 			$('#mViewPage').addClass('active');
+			
+			$.get('/viewPage', function(data){
+				// Inject html into the page
+				$('#mainContainer').html(data);
+		
+				// Reinitialize the original click handlers
+				//initialize();
+			});	
 		}
 	});
 	
